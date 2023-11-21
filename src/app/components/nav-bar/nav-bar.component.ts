@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  Sidenav,
+  initTE,
+} from "tw-elements";
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,5 +13,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
+  ngOnInit() {
+    initTE({ Sidenav });
+  }
 
 }
