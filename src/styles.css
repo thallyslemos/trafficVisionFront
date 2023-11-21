@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #404c8c;
+  --secondary: #459cd9;
+  --tertiary: #f49d27;
+  --quaternary: #f4f4f4;
+  --blue-gradient: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
