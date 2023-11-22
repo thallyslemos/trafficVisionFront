@@ -1,7 +1,15 @@
-import { Component, Input } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js';
 import { Rua } from '../../models/rua.model';
+import { ColorSelector } from '../../../utils/ColorSelector';
+
+type DataType = 'incidentes' | 'trafego' | 'velocidade';
 
 @Component({
   selector: 'app-line-chart',
@@ -9,7 +17,7 @@ import { Rua } from '../../models/rua.model';
   imports: [CommonModule],
   templateUrl: './line-chart.component.html',
 })
-export class LineChartComponent {
+export class LineChartComponent implements OnInit, OnInit {
   @Input({ required: true })
   ruas: Rua[] = [];
 
@@ -19,51 +27,73 @@ export class LineChartComponent {
   @Input({ required: true })
   label: string = '';
 
+  @Input({ required: true })
+  type: DataType = 'incidentes';
+
+  @Input({ required: true })
+  chart_id: string = 'line-chart';
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
   chart: any = [];
 
-  ngOnInit() {
-    console.log(this.ruas);
+  labels: string[] = [];
+  datasets: any[] = [];
 
-    const labels = this.ruas.map((rua) => rua.nome);
-    const data = this.ruas.map((rua) =>
-      rua.dados_de_trafego?.reduce((total, dados) => total + dados.trafego, 0)
+  ngOnInit() {
+    this.labels = this.ruas[0].dados_de_trafego!.map(
+      (dado) => `Semana ${dado.semana}`
     );
 
-    this.chart = new Chart('line-chart', {
+    this.datasets = this.ruas.map((rua, index) => {
+      return {
+        label: rua.nome,
+        data: rua.dados_de_trafego?.map((dado) => {
+          switch (this.type) {
+            case 'incidentes':
+              return dado.incidentes;
+            case 'trafego':
+              return dado.trafego;
+            case 'velocidade':
+              return dado.velocidade_media;
+          }
+        }),
+        fill: false,
+        backgroundColor: ColorSelector(index),
+        yAxisID: 'y',
+      };
+    });
+  }
+
+  ngAfterViewInit() {
+    this.chart = new Chart(this.chart_id, {
       type: 'line',
       data: {
-        labels: labels,
-        datasets: [
-          {
-            label: this.label,
-            data: data,
-            fill: false,
-            backgroundColor: 'rgb(255, 99, 132)',
-          },
-        ],
+        labels: this.labels,
+        datasets: this.datasets,
       },
 
       options: {
         responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
         plugins: {
           title: {
             display: true,
             text: this.title,
           },
-          legend: {
-            labels: {
-              boxWidth: 0,
-            },
-          },
         },
-
         scales: {
           y: {
-            beginAtZero: true,
-            min: 500,
+            type: 'linear',
+            display: true,
+            position: 'left',
           },
         },
       },
     });
+    this.cdr.detectChanges();
   }
 }

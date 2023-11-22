@@ -1,18 +1,33 @@
 <main class="flex flex-col min-h-main-page w-full items-center">
   @defer (when ruas) {
+<section class="flex flex-wrap gap-4 justify-center p-4">
   <app-bar-chart
-    [ruas]="ruas"
-    label="Volume Total de Tráfego"
-    title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
-  />
-  }@loading {
-  <p>Carregando...</p>
-  } @defer (when ruas) {
-  <app-line-chart
-    [ruas]="ruas"
-    label="Volume Total de Tráfego"
-    title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
-  />
+  [ruas]="ruas"
+  label="Volume Total de Tráfego"
+  title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
+/>
+<app-line-chart
+  [ruas]="ruas"
+  label="Volume Total de Tráfego"
+  title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
+  type="velocidade"
+  chart_id="velocidade"
+/>
+<app-line-chart
+  [ruas]="ruas"
+  label="Volume Total de Tráfego"
+  title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
+  type="incidentes"
+  chart_id="incidentes"
+/>
+<app-line-chart
+  [ruas]="ruas"
+  label="Volume Total de Tráfego"
+  title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
+  type="trafego"
+  chart_id="trafego"
+/>
+</section>
   }@loading {
   <p>Carregando...</p>
   }

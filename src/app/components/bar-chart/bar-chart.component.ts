@@ -22,8 +22,6 @@ export class BarChartComponent {
   chart: any = [];
 
   ngOnInit() {
-    console.log(this.ruas);
-
     const labels = this.ruas.map((rua) => rua.nome);
     const data = this.ruas.map((rua) =>
       rua.dados_de_trafego?.reduce((total, dados) => total + dados.trafego, 0)
@@ -44,7 +42,6 @@ export class BarChartComponent {
               'rgb(255, 205, 86)',
             ],
             barThickness: 'flex',
-
           },
         ],
       },
