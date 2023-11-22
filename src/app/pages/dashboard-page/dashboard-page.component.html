@@ -1,7 +1,25 @@
-<main class="flex min-h-main-page w-full justify-center">
-  @for (rua of ruas; track $index) {
+<main class="flex flex-col min-h-main-page w-full items-center">
+  @defer (when ruas) {
+  <app-bar-chart
+    [ruas]="ruas"
+    label="Volume Total de Tráfego"
+    title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
+  />
+  }@loading {
+  <p>Carregando...</p>
+  } @defer (when ruas) {
+  <app-line-chart
+    [ruas]="ruas"
+    label="Volume Total de Tráfego"
+    title="Volume Total de Tráfego por Rua -Últimas 4 Semanas"
+  />
+  }@loading {
+  <p>Carregando...</p>
+  }
+
+  <!-- @for (rua of ruas; track $index) {
   <p>{{ rua.nome }}</p>
   }@empty {
   <p>sem ruas</p>
-  }
+  } -->
 </main>
