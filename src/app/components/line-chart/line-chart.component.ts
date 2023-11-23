@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   Input,
@@ -17,15 +18,12 @@ type DataType = 'incidentes' | 'trafego' | 'velocidade';
   imports: [CommonModule],
   templateUrl: './line-chart.component.html',
 })
-export class LineChartComponent implements OnInit, OnInit {
+export class LineChartComponent implements OnInit, AfterViewInit {
   @Input({ required: true })
   ruas: Rua[] = [];
 
   @Input({ required: true })
   title: string = '';
-
-  @Input({ required: true })
-  label: string = '';
 
   @Input({ required: true })
   type: DataType = 'incidentes';
@@ -38,6 +36,7 @@ export class LineChartComponent implements OnInit, OnInit {
   chart: any = [];
 
   labels: string[] = [];
+
   datasets: any[] = [];
 
   ngOnInit() {
@@ -59,6 +58,7 @@ export class LineChartComponent implements OnInit, OnInit {
           }
         }),
         fill: false,
+        borderColor: ColorSelector(index),
         backgroundColor: ColorSelector(index),
         yAxisID: 'y',
       };
@@ -74,6 +74,7 @@ export class LineChartComponent implements OnInit, OnInit {
       },
 
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         interaction: {
           mode: 'index',
@@ -83,6 +84,13 @@ export class LineChartComponent implements OnInit, OnInit {
           title: {
             display: true,
             text: this.title,
+          },
+          legend: {
+            fullSize: true,
+            labels: {
+              boxWidth: 4,
+              boxHeight: 4,
+            },
           },
         },
         scales: {
@@ -94,6 +102,7 @@ export class LineChartComponent implements OnInit, OnInit {
         },
       },
     });
+
     this.cdr.detectChanges();
   }
 }

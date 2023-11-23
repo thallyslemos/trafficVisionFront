@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 import { Rua } from '../../models/rua.model';
@@ -9,7 +15,7 @@ import { Rua } from '../../models/rua.model';
   imports: [CommonModule],
   templateUrl: './bar-chart.component.html',
 })
-export class BarChartComponent {
+export class BarChartComponent implements OnInit, AfterViewInit {
   @Input({ required: true })
   ruas: Rua[] = [];
 
@@ -19,22 +25,30 @@ export class BarChartComponent {
   @Input({ required: true })
   label: string = '';
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   chart: any = [];
 
-  ngOnInit() {
-    const labels = this.ruas.map((rua) => rua.nome);
-    const data = this.ruas.map((rua) =>
-      rua.dados_de_trafego?.reduce((total, dados) => total + dados.trafego, 0)
-    );
+  labels: string[] = [];
 
+  data: number[] = [];
+
+  ngOnInit() {
+    this.labels = this.ruas.map((rua) => rua.nome);
+    this.data = this.ruas.map((rua) =>
+      rua.dados_de_trafego!.reduce((total, dados) => total + dados.trafego, 0)
+    );
+  }
+
+  ngAfterViewInit(): void {
     this.chart = new Chart('bar-chart', {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: this.labels,
         datasets: [
           {
             label: this.label,
-            data: data,
+            data: this.data,
             borderWidth: 1,
             backgroundColor: [
               'rgb(255, 99, 132)',
@@ -47,6 +61,7 @@ export class BarChartComponent {
       },
 
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         plugins: {
           title: {
@@ -63,10 +78,11 @@ export class BarChartComponent {
         scales: {
           y: {
             beginAtZero: true,
-            min: 500,
           },
         },
       },
     });
+
+    this.cdr.detectChanges();
   }
 }
