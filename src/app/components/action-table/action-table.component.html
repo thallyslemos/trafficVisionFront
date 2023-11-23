@@ -1,0 +1,47 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+    <app-modal>
+      <input type="text">
+    </app-modal>
+      <tr>
+        @for(column of columns; track column){
+        <th scope="col" class="px-6 py-3">{{ column }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for(row of rows; track row){
+      <tr
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
+        <th
+          scope="row"
+          class="flex min-w-[300px] items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+        >
+          <div class="ps-3">
+            <div class="text-base font-semibold">{{ row.name }}</div>
+          </div>
+        </th>
+        <td class="px-6 py-4">
+          <app-rua-form [rua]="row.name"/>
+          <a
+            [href]="'/ruas/' + row.id"
+            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            >Edit user</a
+          >
+          <a
+            [href]="'/ruas/' + row.id"
+            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            >Edit user</a
+          >
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
