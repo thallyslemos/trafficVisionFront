@@ -25,6 +25,7 @@ export class ActionTableComponent implements OnInit {
   }
 
   handleFormSubmit(event: { rua: Rua; isCreation: boolean }) {
+    console.log(event);
     if (event.isCreation) {
       this.ruaService.create(event.rua).subscribe((data) => {
         this.formService.close();

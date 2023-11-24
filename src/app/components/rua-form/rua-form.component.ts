@@ -15,7 +15,7 @@ export class RuaFormComponent {
   isOpen$ = this.formService.isOpen$;
   data$ = this.formService.data$;
   ruaForm: FormGroup;
-  isCreation: boolean = true;
+  isCreation: boolean = false;
   ruaId: number | null = null;
   @Output() submitForm = new EventEmitter<any>();
 
@@ -43,9 +43,12 @@ export class RuaFormComponent {
 
   ngOnInit() {
     this.data$.subscribe((data) => {
-      this.isCreation = !data.id;
-      this.ruaForm.get('nome')?.setValue(data.nome || '');
-      this.ruaId = data.id || null;
+      if (data) {
+        this.ruaForm.setValue({ nome: data.nome });
+        this.isCreation = !data.id;
+        console.log(this.isCreation);
+        this.ruaId = data.id;
+      }
     });
   }
 }

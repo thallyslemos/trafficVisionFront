@@ -1,6 +1,6 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
   <app-rua-form (submitForm)="handleFormSubmit($event)" />
-  <div class="bg-gray-50 flex w-full justify-center border-b">
+  <div class="bg-quaternary flex w-full justify-center">
     <div
       class="flex max-w-lg sm:flex-row flex-col justify-between gap-4 items-center h-full w-full p-2"
     >
@@ -14,18 +14,19 @@
     class="w-[90vw] max-w-screen-md text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
     <thead
-      class="text-gray-800 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      class="text-gray-800 uppercase bg-quaternary"
     >
-      <tr>
-        @for(column of columns; track column){
-        <th scope="col" class="py-3 ps-3">{{ column }}</th>
-        }
+      <tr scope="row">
+        <th scope="col" class="py-3 ps-3">{{ columns[0] }}</th>
+        <th scope="col" class="flex py-3 ps-3 justify-center">
+          {{ columns[1] }}
+        </th>
       </tr>
     </thead>
     <tbody>
       @for(row of rows; track row){
       <tr
-        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        class="border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
       >
         <th
           scope="row"
@@ -36,9 +37,9 @@
           </div>
         </th>
         <td class="py-2">
-          <div class="flex flex-col sm:flex-row">
+          <div class="flex justify-center items-center flex-col sm:flex-row">
             <button
-              class="hover:bg-quaternary text-yellow-400 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
+              class="w-fit justify-center hover:bg-quaternary text-yellow-400 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
               (click)="openForm(row)"
             >
               <p>editar</p>
@@ -57,7 +58,7 @@
               </svg>
             </button>
             <button
-              class="hover:bg-quaternary text-red-500 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
+              class="w-fit justify-center hover:bg-quaternary text-red-500 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
               (click)="deleteRua(row.id)"
             >
               <p>deletar</p>
