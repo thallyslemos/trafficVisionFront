@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-
-export type ToastType = 'success' | 'error' | 'warning';
-export type ToasdData = {
-  type: ToastType;
-  message: string;
-} | null;
+import { ToasdData } from '../models/toast.model ';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +9,7 @@ export type ToasdData = {
 export class ToastService {
   private _isOpen = new BehaviorSubject<boolean>(false);
   private _data = new BehaviorSubject<ToasdData>(null);
-  private closeSubscription: Subscription | null = null;
+  private _closeSubscription: Subscription | null = null;
 
   isOpen$ = this._isOpen.asObservable();
   data$ = this._data.asObservable();
@@ -24,13 +19,13 @@ export class ToastService {
     this._isOpen.next(true);
 
     // Cancela a subscrição anterior
-    if (this.closeSubscription) {
-      this.closeSubscription.unsubscribe();
+    if (this._closeSubscription) {
+      this._closeSubscription.unsubscribe();
     }
 
     // Inicia um novo intervalo
-    this.closeSubscription = of(null)
-      .pipe(delay(5000))
+    this._closeSubscription = of(null)
+      .pipe(delay(3000))
       .subscribe(() => this.close());
   }
 
@@ -39,9 +34,9 @@ export class ToastService {
     this._data.next(null);
 
     // Limpa o intervalo
-    if (this.closeSubscription) {
-      this.closeSubscription.unsubscribe();
-      this.closeSubscription = null;
+    if (this._closeSubscription) {
+      this._closeSubscription.unsubscribe();
+      this._closeSubscription = null;
     }
   }
   constructor() {}

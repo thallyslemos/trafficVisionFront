@@ -6,6 +6,7 @@ import { Rua } from '../../models/rua.model';
 import { RuaService } from '../../services/rua.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { ToastService } from '../../services/toast.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-action-table',
@@ -30,38 +31,36 @@ export class ActionTableComponent implements OnInit {
 
   handleFormSubmit(event: { rua: Rua; isCreation: boolean }) {
     this.isLoading = true;
-    if (event.isCreation) {
-      this.ruaService.create(event.rua).subscribe((data) => {
-        this.toastService.close()
+
+    const ruaOperation = event.isCreation
+      ? this.ruaService.create(event.rua)
+      : this.ruaService.update(event.rua);
+    const successMessage = event.isCreation
+      ? 'Rua criada com sucesso!'
+      : 'Rua atualizada com sucesso!';
+
+    ruaOperation.subscribe((data) => {
+      if (data) {
         this.toastService.open({
-          message: 'Rua criada com sucesso!',
+          message: successMessage,
           type: 'success',
         });
-        this.isLoading = false;
-        this.formService.close();
-        this.loadRuas();
-      });
-    } else {
-      this.ruaService.update(event.rua).subscribe((data) => {
-        this.toastService.close()
-        this.toastService.open({
-          message: 'Rua atualizada com sucesso!',
-          type: 'success',
-        })
-        this.isLoading = false;
-        this.formService.close();
-        this.loadRuas();
-      });
-    }
+      }
+      this.isLoading = false;
+      this.formService.close();
+      this.loadRuas();
+    });
   }
 
   deleteRua(id: number) {
-    // inserir modal de confirmação de deleção
     this.isLoading = true;
-    this.ruaService.delete(id).subscribe((data) => {
-      this.toastService.close()
+
+    const ruaOperation = this.ruaService.delete(id);
+    const successMessage = 'Rua deletada com sucesso!';
+
+    ruaOperation.subscribe((data) => {
       this.toastService.open({
-        message: 'Rua deletada com sucesso!',
+        message: successMessage,
         type: 'success',
       });
       this.isLoading = false;
@@ -77,9 +76,12 @@ export class ActionTableComponent implements OnInit {
 
   loadRuas() {
     this.isLoading = true;
-    this.ruaService.getAll().subscribe((data) => {
-      this.isLoading = false;
-      this.rows = data;
-    });
+    this.ruaService
+      .getAll()
+
+      .subscribe((data) => {
+        this.isLoading = false;
+        this.rows = data;
+      });
   }
 }

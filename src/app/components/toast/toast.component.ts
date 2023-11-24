@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  ToasdData,
   ToastService,
-  ToastType,
 } from '../../services/toast.service';
+import { ToasdData } from '../../models/toast.model ';
 
 @Component({
   selector: 'app-toast',
