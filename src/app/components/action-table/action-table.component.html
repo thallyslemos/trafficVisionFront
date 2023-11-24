@@ -13,9 +13,7 @@
   <table
     class="w-[90vw] max-w-screen-md text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
-    <thead
-      class="text-gray-800 uppercase bg-quaternary"
-    >
+    <thead class="text-gray-800 uppercase bg-quaternary">
       <tr scope="row">
         <th scope="col" class="py-3 ps-3">{{ columns[0] }}</th>
         <th scope="col" class="flex py-3 ps-3 justify-center">
@@ -82,3 +80,6 @@
     </tbody>
   </table>
 </div>
+@if(isLoading){
+<app-loading />
+}
