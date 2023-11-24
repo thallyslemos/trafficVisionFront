@@ -1,34 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RuaFormComponent } from '../rua-form/rua-form.component';
-import { ModalComponent } from '../modal/modal.component';
+import { FormDataService } from '../../services/form-data.service';
+import { Rua } from '../../models/rua.model';
+import { RuaService } from '../../services/rua.service';
 
 @Component({
   selector: 'app-action-table',
   standalone: true,
-  imports: [CommonModule, RuaFormComponent, ModalComponent],
+  imports: [CommonModule, RuaFormComponent],
   templateUrl: './action-table.component.html',
-  styleUrl: './action-table.component.css',
 })
 export class ActionTableComponent implements OnInit {
   columns: any[] = [];
   rows: any[] = [];
 
+  constructor(
+    private formService: FormDataService,
+    private ruaService: RuaService
+  ) {}
+
+  openForm(rua?: { nome: string; id: number | null }) {
+    this.formService.open(rua);
+  }
+
+  handleFormSubmit(event: { rua: Rua; isCreation: boolean }) {
+    if (event.isCreation) {
+      this.ruaService.create(event.rua).subscribe((data) => {
+        this.formService.close();
+        this.loadRuas();
+      });
+    } else {
+      this.ruaService.update(event.rua).subscribe((data) => {
+        this.formService.close();
+        this.loadRuas();
+      });
+    }
+  }
+
+  deleteRua(id: number) {
+    // inserir modal de confirmação de deleção
+    this.ruaService.delete(id).subscribe((data) => {
+      this.formService.close();
+      this.loadRuas();
+    });
+  }
+
   ngOnInit() {
-    this.rows = [
-      {
-        name: 'Tiger Nixon',
-        id: 1,
-      },
-      {
-        name: 'Garrett Winters',
-        id: 2,
-      },
-      {
-        name: 'Ashton Cox',
-        id: 3,
-      },
-    ];
-    this.columns = ['Rua', 'Ações'];
+    this.loadRuas();
+    this.columns = ['Nome', 'Ações'];
+  }
+
+  loadRuas() {
+    this.ruaService.getAll().subscribe((data) => {
+      this.rows = data;
+    });
   }
 }

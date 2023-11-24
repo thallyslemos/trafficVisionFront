@@ -1,12 +1,51 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormDataService } from '../../services/form-data.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rua-form',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  providers: [ReactiveFormsModule],
   templateUrl: './rua-form.component.html',
 })
 export class RuaFormComponent {
-  @Input() rua: any;
+  isOpen$ = this.formService.isOpen$;
+  data$ = this.formService.data$;
+  ruaForm: FormGroup;
+  isCreation: boolean = true;
+  ruaId: number | null = null;
+  @Output() submitForm = new EventEmitter<any>();
+
+  constructor(private formService: FormDataService) {
+    this.ruaForm = new FormGroup({
+      nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    });
+  }
+
+  closeForm() {
+    this.formService.close();
+  }
+
+  submit() {
+    if (this.ruaForm.valid) {
+      this.submitForm.emit({
+        rua: { nome: this.ruaForm.value.nome, id: this.ruaId },
+        isCreation: this.isCreation,
+      });
+      this.formService.close();
+    } else {
+      // tratar caso de validação falhar...
+    }
+  }
+
+  ngOnInit() {
+    this.data$.subscribe((data) => {
+      this.isCreation = !data.id;
+      this.ruaForm.get('nome')?.setValue(data.nome || '');
+      this.ruaId = data.id || null;
+    });
+  }
 }

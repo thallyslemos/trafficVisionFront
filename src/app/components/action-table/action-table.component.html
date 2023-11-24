@@ -1,13 +1,22 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
+  <app-rua-form (submitForm)="handleFormSubmit($event)"/>
+  <div class="h-20 w-full">
+    <div class="flex justify-between items-center h-full w-full p-2 bg-gray-50">
+      <h2 class="text-lg">Gerenciar Logradouros</h2>
+      <button
+        class="btn-primary"
+        (click)="openForm({nome: '', id: null})"
+      >
+        Adicionar
+      </button>
+    </div>
+  </div>
   <table
     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
     <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      class="text-gray-800 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
-    <app-modal>
-      <input type="text">
-    </app-modal>
       <tr>
         @for(column of columns; track column){
         <th scope="col" class="px-6 py-3">{{ column }}</th>
@@ -21,24 +30,15 @@
       >
         <th
           scope="row"
-          class="flex min-w-[300px] items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+          class="flex min-w-[300px] items-center px-6 py-4 text-gray-700 whitespace-nowrap dark:text-white"
         >
           <div class="ps-3">
-            <div class="text-base font-semibold">{{ row.name }}</div>
+            <div class="">{{ row.nome }}</div>
           </div>
         </th>
-        <td class="px-6 py-4">
-          <app-rua-form [rua]="row.name"/>
-          <a
-            [href]="'/ruas/' + row.id"
-            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-            >Edit user</a
-          >
-          <a
-            [href]="'/ruas/' + row.id"
-            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-            >Edit user</a
-          >
+        <td class=" px-6 py-4 space-x-1">
+          <button (click)="openForm(row)">editar</button>
+          <button (click)="deleteRua(row.id)">deletar</button>
         </td>
       </tr>
       }
