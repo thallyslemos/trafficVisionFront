@@ -6,7 +6,6 @@ import { Rua } from '../../models/rua.model';
 import { RuaService } from '../../services/rua.service';
 import { LoadingComponent } from '../loading/loading.component';
 import { ToastService } from '../../services/toast.service';
-import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-action-table',
