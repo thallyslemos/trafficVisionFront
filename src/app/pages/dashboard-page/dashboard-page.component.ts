@@ -23,7 +23,7 @@ export class DashboardPageComponent implements OnInit {
   public ruas: Rua[] = [];
 
   ngOnInit(): void {
-    this.ruaService.getAll().subscribe((ruas: Rua[]) => {
+    this.ruaService.getAllWithData().subscribe((ruas: Rua[]) => {
       this.ruas = ruas;
     });
   }

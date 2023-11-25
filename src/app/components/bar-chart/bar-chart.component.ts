@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
 import { Rua } from '../../models/rua.model';
+import { ColorSelector } from '../../../utils/ColorSelector';
 
 @Component({
   selector: 'app-bar-chart',
@@ -33,11 +34,17 @@ export class BarChartComponent implements OnInit, AfterViewInit {
 
   data: number[] = [];
 
+  colors: string[] = [];
+
   ngOnInit() {
     this.labels = this.ruas.map((rua) => rua.nome);
-    this.data = this.ruas.map((rua) =>
-      rua.dados_de_trafego!.reduce((total, dados) => total + dados.trafego, 0)
-    );
+    this.ruas.map((rua, index) => {
+      this.data.push(
+        rua.dadosTrafego!.reduce((total, dados) => total + dados.fluxo, 0)
+      );
+      this.colors.push(ColorSelector(index));
+    });
+    console.log(this.data);
   }
 
   ngAfterViewInit(): void {
@@ -50,11 +57,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
             label: this.label,
             data: this.data,
             borderWidth: 1,
-            backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-              'rgb(255, 205, 86)',
-            ],
+            backgroundColor: this.colors,
             barThickness: 'flex',
           },
         ],
