@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  Sidenav,
-  initTE,
-} from "tw-elements";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  styleUrl: './nav-bar.component.css',
 })
 export class NavBarComponent {
-  ngOnInit() {
-    initTE({ Sidenav });
-  }
+  constructor(private router: Router) {}
 
+  isActive(path: string): boolean {
+    return this.router.url === path;
+  }
 }
