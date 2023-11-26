@@ -1,4 +1,4 @@
-export type DadosDeTrafego = {
+export type DadosTrafego = {
   id: number;
   semana: number;
   fluxo: number;
@@ -9,5 +9,5 @@ export type DadosDeTrafego = {
 export type Rua = {
   id: number;
   nome: string;
-  dadosTrafego?: DadosDeTrafego[];
+  dadosTrafego?: DadosTrafego[];
 };

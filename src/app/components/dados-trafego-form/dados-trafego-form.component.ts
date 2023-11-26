@@ -1,26 +1,25 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormDataService } from '../../services/form-data.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-rua-form',
+  selector: 'app-dados-trafego-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  providers: [ReactiveFormsModule],
-  templateUrl: './rua-form.component.html',
+  templateUrl: './dados-trafego-form.component.html',
 })
-export class RuaFormComponent {
+export class DadosTrafegoFormComponent {
+
   isOpen$ = this.formService.isOpen$;
   data$ = this.formService.data$;
-  ruaForm: FormGroup;
+  dadosForm: FormGroup;
   isCreation: boolean = false;
-  ruaId: number | null = null;
+  dadosId: number | null = null;
   @Output() submitForm = new EventEmitter<any>();
 
   constructor(private formService: FormDataService) {
-    this.ruaForm = new FormGroup({
+    this.dadosForm = new FormGroup({
       nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
   }
@@ -30,9 +29,9 @@ export class RuaFormComponent {
   }
 
   submit() {
-    if (this.ruaForm.valid) {
+    if (this.dadosForm.valid) {
       this.submitForm.emit({
-        rua: { nome: this.ruaForm.value.nome, id: this.ruaId },
+        rua: { nome: this.dadosForm.value.nome, id: this.dadosId },
         isCreation: this.isCreation,
       });
       this.formService.close();
@@ -44,10 +43,10 @@ export class RuaFormComponent {
   ngOnInit() {
     this.data$.subscribe((data) => {
       if (data) {
-        this.ruaForm.setValue({ nome: data.nome });
+        this.dadosForm.setValue({ nome: data.nome });
         this.isCreation = !data.id;
         console.log(this.isCreation);
-        this.ruaId = data.id;
+        this.dadosId = data.id;
       }
     });
   }

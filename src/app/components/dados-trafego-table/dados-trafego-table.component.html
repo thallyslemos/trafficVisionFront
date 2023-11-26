@@ -1,11 +1,21 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
-  <app-rua-form (submitForm)="handleFormSubmit($event)" />
+  <app-dados-trafego-form (submitForm)="handleFormSubmit($event)" />
   <div class="bg-quaternary flex w-full justify-center">
     <div
       class="flex max-w-lg sm:flex-row flex-col justify-between gap-4 items-center h-full w-full p-2"
     >
-      <h2 class="text-lg">Gerenciar Ruas</h2>
-      <button class="btn-primary" (click)="openForm({ nome: '', id: null })">
+      <a class="btn-primary" href="/ruas"> Voltar </a>
+      <h2 class="text-lg">Gerenciar Dados</h2>
+      <button
+        class="btn-primary"
+        (click)="openForm(  {
+        id: null,
+        semana: null,
+        fluxo: null,
+        velocidadeMedia: null,
+        incidentes: null,
+      })"
+      >
         Adicionar
       </button>
     </div>
@@ -15,10 +25,11 @@
   >
     <thead class="text-gray-800 uppercase bg-quaternary">
       <tr scope="row">
-        <th scope="col" class="py-3 ps-3">{{ columns[0] }}</th>
-        <th scope="col" class="flex py-3 ps-3 justify-center">
-          {{ columns[1] }}
-        </th>
+        @for(column of columns; track column){
+        <th scope="col" class="py-3 ps-3">{{ column }}</th>
+
+        }
+        <th scope="col" class="flex py-3 ps-3 justify-center">Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -31,30 +42,26 @@
           class="flex items-center py-4 text-gray-700 dark:text-white"
         >
           <div class="ps-3">
-            {{ row.nome }}
+            {{ row.semana }}
           </div>
         </th>
+        <td scope="row">
+          <div class="ps-3">
+            {{ row.fluxo }}
+          </div>
+        </td>
+        <td scope="row">
+          <div class="ps-3">
+            {{ row.velocidadeMedia }}
+          </div>
+        </td>
+        <td scope="row">
+          <div class="ps-3">
+            {{ row.incidentes }}
+          </div>
+        </td>
         <td class="py-2">
           <div class="flex justify-center items-center flex-col sm:flex-row">
-            <a
-              class="w-fit justify-center hover:bg-quaternary text-blue-400 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
-              [href]="'/ruas/' + row.id"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                />
-              </svg>
-            </a>
             <button
               class="w-fit justify-center hover:bg-quaternary text-yellow-400 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
               (click)="openForm(row)"
@@ -75,7 +82,6 @@
             </button>
             <button
               class="w-fit justify-center hover:bg-quaternary text-red-500 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
-              (click)="deleteRua(row.id)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
