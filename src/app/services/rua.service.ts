@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, of } from 'rxjs';
 import { Rua } from '../models/rua.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { Rua } from '../models/rua.model';
 export class RuaService {
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
-  private url = `http://localhost:8080/ruas`;
+  private url = environment.apiUrl + '/ruas';
 
   getAll(): Observable<Rua[]> {
     return this.http.get<Rua[]>(this.url).pipe(

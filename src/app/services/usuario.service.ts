@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, map, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { Usuario } from '../models/usuario.model';
 export class UsuarioService {
   constructor(private http: HttpClient, private toastr: ToastrService) {}
 
-  private url = 'http://localhost:8080/usuarios';
+  private url = environment.apiUrl + '/usuarios';
 
   public create(usuario: Usuario): Observable<boolean> {
     return this.http

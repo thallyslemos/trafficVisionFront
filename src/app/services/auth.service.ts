@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Auth } from '../models/auth.model';
 import { Usuario } from '../models/usuario.model';
 
@@ -16,7 +17,7 @@ export class AuthService {
     private router: Router
   ) {}
 
-  private url = 'http://localhost:8080/auth';
+  private url = environment.apiUrl + '/auth';
 
   public login(credenciais: Usuario): Observable<Auth | null> {
     return this.http.post<Auth>(this.url, credenciais).pipe(
