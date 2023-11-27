@@ -1,4 +1,6 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-20">
+<div
+  class="relative flex flex-col max-w-[95vw] h-full overflow-auto shadow-md sm:rounded-lg my-20"
+>
   <app-dados-trafego-form (submitForm)="handleFormSubmit($event)" />
   <div class="bg-quaternary flex w-full justify-center">
     <div
@@ -24,7 +26,7 @@
     </div>
   </div>
   <table
-    class="w-[90vw] max-w-screen-md text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
     <thead class="text-gray-800 uppercase bg-quaternary">
       <tr scope="row">
@@ -85,6 +87,7 @@
             </button>
             <button
               class="w-fit justify-center hover:bg-quaternary text-red-500 flex items-center gap-1 shadow-md py-1 px-2 rounded-md"
+              (click)="handleDelete(row.id!)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
