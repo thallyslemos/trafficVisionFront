@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -5,10 +6,9 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import Chart from 'chart.js/auto';
-import { Rua } from '../../models/rua.model';
 import { ColorSelector } from '../../../utils/ColorSelector';
+import { Rua } from '../../models/rua.model';
 
 @Component({
   selector: 'app-bar-chart',
@@ -40,11 +40,10 @@ export class BarChartComponent implements OnInit, AfterViewInit {
     this.labels = this.ruas.map((rua) => rua.nome);
     this.ruas.map((rua, index) => {
       this.data.push(
-        rua.dadosTrafego!.reduce((total, dados) => total + dados.fluxo, 0)
+        rua.dadosTrafego!.reduce((total, dados) => total + dados.fluxo!, 0)
       );
       this.colors.push(ColorSelector(index));
     });
-    console.log(this.data);
   }
 
   ngAfterViewInit(): void {

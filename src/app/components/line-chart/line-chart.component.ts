@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -5,10 +6,9 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js';
-import { Rua } from '../../models/rua.model';
 import { ColorSelector } from '../../../utils/ColorSelector';
+import { Rua } from '../../models/rua.model';
 
 type DataType = 'incidentes' | 'trafego' | 'velocidade';
 

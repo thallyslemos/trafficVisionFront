@@ -10,20 +10,20 @@
     <app-line-chart
       [ruas]="ruas"
       title="Volume de Tráfego por Semana"
-      type="velocidade"
-      chart_id="velocidade"
-    />
-    <app-line-chart
-      [ruas]="ruas"
-      title="Velocidade Média (km/h) por Semana"
-      type="incidentes"
-      chart_id="incidentes"
-    />
-    <app-line-chart
-      [ruas]="ruas"
-      title="Incidentes por Semana"
       type="trafego"
       chart_id="trafego"
+      />
+      <app-line-chart
+      [ruas]="ruas"
+      title="Velocidade Média (km/h) por Semana"
+      type="velocidade"
+      chart_id="velocidade"
+      />
+      <app-line-chart
+      [ruas]="ruas"
+      title="Incidentes por Semana"
+      type="incidentes"
+      chart_id="incidentes"
     />
     } @else {
     <p>Não há dados para exibir</p>
