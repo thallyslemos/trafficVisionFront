@@ -24,6 +24,10 @@ npm install -g @angular/cli
 
 npm install
 ```
+  - Inserir url local da api:
+
+    na arquivo `src/enviroments/enviroments.ts` insira a url na variavel ´apiUrl´.
+    
   - Executar a aplicação:
 ```bash
 ng serve
