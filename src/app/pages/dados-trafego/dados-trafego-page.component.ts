@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DadosTrafegoTableComponent } from '../../components/dados-trafego-table/dados-trafego-table.component';
 
@@ -17,8 +17,5 @@ export class DadosTrafegoPageComponent {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
-    console.log(this.id);
-    console.log('teste');
-
   }
 }

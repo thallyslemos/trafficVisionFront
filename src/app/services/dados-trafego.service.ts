@@ -1,7 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
-import { DadosTrafego, Rua } from '../models/rua.model';
-import { HttpClient } from '@angular/common/http';
+import { DadosTrafego } from '../models/rua.model';
 import { ToastService } from './toast.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { ToastService } from './toast.service';
 export class DadosTrafegoService {
   constructor(private http: HttpClient, private toastService: ToastService) {}
 
-  private url = 'http://localhost:8080/dados-trafego';
+  private url = `http://localhost:8080/dados-trafego`;
 
   getByRuaId(id: number): Observable<DadosTrafego[]> {
     return this.http.get<DadosTrafego[]>(this.url + '/rua/' + id).pipe(
@@ -25,46 +25,46 @@ export class DadosTrafegoService {
     );
   }
 
-  getAllWithData(): Observable<Rua[]> {
-    return this.http.get<Rua[]>(this.url + '/dados').pipe(
-      catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao carregar dados',
-        });
-        console.error(error);
-        return of([]);
+  create(dadosTrafego: DadosTrafego): Observable<DadosTrafego | null> {
+    console.log(dadosTrafego);
+    const { semana, fluxo, incidentes, velocidadeMedia, rua } = dadosTrafego;
+    return this.http
+      .post<DadosTrafego>(this.url, {
+        semana,
+        fluxo,
+        incidentes,
+        velocidadeMedia,
+        ruaId: rua!.id,
       })
-    );
-  }
-  create(rua: Rua): Observable<Rua | null> {
-    return this.http.post<Rua>(this.url, { nome: rua.nome }).pipe(
-      catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao criar dados',
-        });
-        console.error(error);
-        return of(null);
-      })
-    );
+      .pipe(
+        catchError((error) => {
+          this.toastService.open({
+            type: 'error',
+            message: 'Erro ao criar dados',
+          });
+          console.error(error);
+          return of(null);
+        })
+      );
   }
 
-  update(rua: Rua): Observable<Rua | null> {
-    return this.http.put<Rua>(this.url + '/' + rua.id, { nome: rua.nome }).pipe(
-      catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao atualizar dados',
-        });
-        console.error(error);
-        return of(null);
-      })
-    );
+  update(dadosTrafego: DadosTrafego): Observable<DadosTrafego | null> {
+    return this.http
+      .put<DadosTrafego>(this.url + '/' + dadosTrafego.id, { ...dadosTrafego })
+      .pipe(
+        catchError((error) => {
+          this.toastService.open({
+            type: 'error',
+            message: 'Erro ao atualizar dados',
+          });
+          console.error(error);
+          return of(null);
+        })
+      );
   }
 
-  delete(id: number): Observable<Rua | null> {
-    return this.http.delete<Rua>(this.url + '/' + id).pipe(
+  delete(id: number): Observable<DadosTrafego | null> {
+    return this.http.delete<DadosTrafego>(this.url + '/' + id).pipe(
       catchError((error) => {
         console.error(error);
         this.toastService.open({

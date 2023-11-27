@@ -10,7 +10,7 @@
         class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
       >
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          @if(isCreation){ Adicionar logradouro }@else{ Editar logradouro }
+          @if(isCreation){ Cadastrar dados }@else{ Editar dados }
         </h3>
         <button
           type="button"
@@ -38,118 +38,95 @@
       </div>
       <!-- Modal body -->
       <div class="p-4 md:p-5">
-        <form [formGroup]="ruaForm" (ngSubmit)="submit()">
+        <form
+          [formGroup]="dadosForm"
+          (ngSubmit)="submit()"
+          class="gap-2 flex flex-col"
+        >
           <label
-            for="nome"
+            for="semana"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Nome</label
-          >
-          <input
-            formControlName="nome"
-            type="text"
-            name="name"
-            id="name"
-            class="input-primary"
-            placeholder="Digite o nome do logradouro"
-            required=""
-          />
+            >Semana
+            <input
+              formControlName="semana"
+              type="number"
+              name="semana"
+              id="semana"
+              class="input-primary"
+              required=""
+            />
 
-          @if(ruaForm.get('nome')?.errors?.['required']){
+            @if(dadosForm.controls['semana'].invalid &&
+            dadosForm.controls['semana'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+          <label
+            for="fluxo"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Fluxo
+            <input
+              formControlName="fluxo"
+              type="number"
+              name="fluxo"
+              id="fluxo"
+              class="input-primary"
+              required=""
+            />
+            @if(dadosForm.controls['fluxo'].invalid &&
+            dadosForm.controls['fluxo'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+          <label
+            for="velocidadeMedia"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Velocidade Media
+            <input
+              formControlName="velocidadeMedia"
+              type="number"
+              name="velocidadeMedia"
+              id="velocidadeMedia"
+              class="input-primary"
+              required=""
+            />
+            @if(dadosForm.controls['velocidadeMedia'].invalid &&
+            dadosForm.controls['velocidadeMedia'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+          <label
+            for="incidentes"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Incidentes
+            <input
+              formControlName="incidentes"
+              type="number"
+              name="incidentes"
+              id="incidentes"
+              class="input-primary"
+              required=""
+            />
+            @if(dadosForm.controls['incidentes'].invalid &&
+            dadosForm.controls['incidentes'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+
+          @if(dadosForm.get('nome')?.errors?.['required']){
           <p class="text-error">O nome é obrigatório.</p>
-          } @if(ruaForm.get('nome')?.errors?.['minlength']){
+          } @if(dadosForm.get('nome')?.errors?.['minlength']){
           <p class="text-error">O nome deve ter pelo menos 3 caracteres.</p>
           }
-
           <button type="submit" class="btn-primary w-full mt-8">Salvar</button>
-          <label
-            for="bedrooms-input"
-            class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Choose quantity:</label
-          >
-          <div class="flex items-center max-w-[11rem]">
-            <button
-              type="button"
-              id="decrement-button"
-              data-input-counter-decrement="bedrooms-input"
-              class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
-            >
-              <svg
-                class="w-3 h-3 text-gray-900 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 2"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 1h16"
-                />
-              </svg>
-            </button>
-            <input
-              type="text"
-              id="bedrooms-input"
-              data-input-counter
-              data-input-counter-min="1"
-              data-input-counter-max="5"
-              aria-describedby="helper-text-explanation"
-              class="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder=""
-              value="3"
-              required
-            />
-            <div
-              class="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse"
-            >
-              <svg
-                class="w-2.5 h-2.5 text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9"
-                />
-              </svg>
-              <span>Bedrooms</span>
-            </div>
-            <button
-              type="button"
-              id="increment-button"
-              data-input-counter-increment="bedrooms-input"
-              class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
-            >
-              <svg
-                class="w-3 h-3 text-gray-900 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 18"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 1v16M1 9h16"
-                />
-              </svg>
-            </button>
-          </div>
-          <p
-            id="helper-text-explanation"
-            class="mt-2 text-sm text-gray-500 dark:text-gray-400"
-          >
-            Please select the number of bedrooms.
-          </p>
         </form>
       </div>
     </div>

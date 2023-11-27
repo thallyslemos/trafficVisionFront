@@ -4,17 +4,20 @@
     <div
       class="flex max-w-lg sm:flex-row flex-col justify-between gap-4 items-center h-full w-full p-2"
     >
-      <a class="btn-primary" href="/ruas"> Voltar </a>
+      <a class="btn-primary" href="/auth/ruas"> Voltar </a>
       <h2 class="text-lg">Gerenciar Dados</h2>
       <button
         class="btn-primary"
-        (click)="openForm(  {
-        id: null,
-        semana: null,
-        fluxo: null,
-        velocidadeMedia: null,
-        incidentes: null,
-      })"
+        (click)="
+          openForm({
+            id: 0,
+            semana: 0,
+            fluxo: 0,
+            velocidadeMedia: 0,
+            incidentes: 0,
+            rua: { id: ruaId!, nome: '' }
+          })
+        "
       >
         Adicionar
       </button>

@@ -62,9 +62,9 @@ export class DadosTrafegoFormComponent {
           incidentes: dados.incidentes,
           velocidadeMedia: dados.velocidadeMedia,
         });
-        this.isCreation = !!dados;
         this.dadosId = dados.id;
       }
+      this.isCreation = !dados.id;
     });
   }
 }

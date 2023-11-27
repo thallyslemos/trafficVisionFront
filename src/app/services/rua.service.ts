@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of, retry } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { Rua } from '../models/rua.model';
 import { ToastService } from './toast.service';
 
@@ -10,15 +10,15 @@ import { ToastService } from './toast.service';
 export class RuaService {
   constructor(private http: HttpClient, private toastService: ToastService) {}
 
-  private url = 'http://localhost:8080/ruas';
+  private url = `http://localhost:8080/ruas`;
 
   getAll(): Observable<Rua[]> {
     return this.http.get<Rua[]>(this.url).pipe(
       catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao carregar dados',
-        });
+        // this.toastService.open({
+        //   type: 'error',
+        //   message: 'Erro ao carregar dados',
+        // });
         console.error(error);
         return of([]);
       })
@@ -28,10 +28,10 @@ export class RuaService {
   getAllWithData(): Observable<Rua[]> {
     return this.http.get<Rua[]>(this.url + '/dados').pipe(
       catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao carregar dados',
-        });
+        // this.toastService.open({
+        //   type: 'error',
+        //   message: 'Erro ao carregar dados',
+        // });
         console.error(error);
         return of([]);
       })
@@ -40,10 +40,10 @@ export class RuaService {
   create(rua: Rua): Observable<Rua | null> {
     return this.http.post<Rua>(this.url, { nome: rua.nome }).pipe(
       catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao criar dados',
-        });
+        // this.toastService.open({
+        //   type: 'error',
+        //   message: 'Erro ao criar dados',
+        // });
         console.error(error);
         return of(null);
       })
@@ -53,10 +53,10 @@ export class RuaService {
   update(rua: Rua): Observable<Rua | null> {
     return this.http.put<Rua>(this.url + '/' + rua.id, { nome: rua.nome }).pipe(
       catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao atualizar dados',
-        });
+        // this.toastService.open({
+        //   type: 'error',
+        //   message: 'Erro ao atualizar dados',
+        // });
         console.error(error);
         return of(null);
       })
@@ -67,10 +67,10 @@ export class RuaService {
     return this.http.delete<Rua>(this.url + '/' + id).pipe(
       catchError((error) => {
         console.error(error);
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao deletar dados',
-        });
+        // this.toastService.open({
+        //   type: 'error',
+        //   message: 'Erro ao deletar dados',
+        // });
         return of(null);
       })
     );
