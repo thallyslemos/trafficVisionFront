@@ -1,27 +1,37 @@
-# TfFront
+# TrafficVision - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.2.
+Este projeto corresponde ao frontend do TrafficVision, desenvolvido como parte do processo seletivo para a vaga de Analista de Desenvolvimento Júnior no setor de P&D da TIVIC.
 
-## Development server
+## Sobre o Projeto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+O TrafficVision é um sistema de gerenciamento de dados de tráfego, projetado para fornecer informações detalhadas sobre ruas, incluindo relações entre acidentes, velocidade média e fluxo semanal. Desenvolvido em Angular 17, o sistema oferece autenticação de usuários, cadastro de ruas, edição, remoção e gerenciamento eficiente de dados. Também permite a visualização desses dados por meio de diferentes tipos de gráficos.
 
-## Code scaffolding
+## Tecnologias Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  - Angular 17
+  - Node.js 18.17 (ambiente recomendado)
+  - Tailwind CSS para estilização
+  - Toastr para mensagens de alerta
+  - Chart.js 3.9.1 para renderização de gráficos
 
-## Build
+## Executar em modo de Desenvolvimento
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Para executar a aplicação em modo de desenvolvimento, sega esses passos:
 
-## Running unit tests
+  - Instalar as dependências e o angular cli:
+```bash
+npm install -g @angular/cli
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+npm install
+```
+  - Executar a aplicação:
+```bash
+ng serve
+```
+Abra `http://localhost:4200/` com seu navegador para ver o resultado.
 
-## Running end-to-end tests
+## Deploy
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+O projeto está disponível para visualização em `https://traffic-vision.vercel.app/`.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
