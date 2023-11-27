@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RuaFormComponent } from '../rua-form/rua-form.component';
-import { FormDataService } from '../../services/form-data.service';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Rua } from '../../models/rua.model';
+import { FormDataService } from '../../services/form-data.service';
 import { RuaService } from '../../services/rua.service';
 import { LoadingComponent } from '../loading/loading.component';
-import { ToastService } from '../../services/toast.service';
-import { catchError, of } from 'rxjs';
+import { RuaFormComponent } from '../rua-form/rua-form.component';
 
 @Component({
   selector: 'app-action-table',
@@ -22,7 +21,7 @@ export class ActionTableComponent implements OnInit {
   constructor(
     private formService: FormDataService,
     private ruaService: RuaService,
-    private toastService: ToastService
+    private toastr: ToastrService
   ) {}
 
   openForm(rua?: { nome: string; id: number | null }) {
@@ -41,10 +40,7 @@ export class ActionTableComponent implements OnInit {
 
     ruaOperation.subscribe((data) => {
       if (data) {
-        this.toastService.open({
-          message: successMessage,
-          type: 'success',
-        });
+        this.toastr.success(successMessage);
       }
       this.isLoading = false;
       this.formService.close();
@@ -59,10 +55,7 @@ export class ActionTableComponent implements OnInit {
     const successMessage = 'Rua deletada com sucesso!';
 
     ruaOperation.subscribe((data) => {
-      this.toastService.open({
-        message: successMessage,
-        type: 'success',
-      });
+      this.toastr.success(successMessage);
       this.isLoading = false;
       this.formService.close();
       this.loadRuas();

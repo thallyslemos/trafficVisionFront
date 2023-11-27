@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormDataService } from '../../services/form-data.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rua-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   providers: [ReactiveFormsModule],
   templateUrl: './rua-form.component.html',
 })
@@ -46,7 +45,6 @@ export class RuaFormComponent {
       if (data) {
         this.ruaForm.setValue({ nome: data.nome });
         this.isCreation = !data.id;
-        console.log(this.isCreation);
         this.ruaId = data.id;
       }
     });

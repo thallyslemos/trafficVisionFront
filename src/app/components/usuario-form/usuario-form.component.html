@@ -1,0 +1,115 @@
+<div
+  class="h-fit w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+    <h5 class="text-xl font-medium text-gray-900 dark:text-white">
+      {{
+        type === "login"
+          ? "Faça login na nossa plataforma"
+          : "Cadastre-se na nossa plataforma"
+      }}
+    </h5>
+    <div>
+      <label
+        for="email"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Seu e-mail</label
+      >
+      <input
+        formControlName="email"
+        type="email"
+        name="email"
+        id="email"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+        placeholder="nome@empresa.com"
+        required
+      />
+      @if(form.controls.email.invalid && form.controls.email.touched){
+      <small class="text-sm text-red-500"> O email deve ser válido</small>
+      }
+    </div>
+    <div>
+      <label
+        for="senha"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Sua senha</label
+      >
+      <div class="relative">
+        <input
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="senha"
+          name="senha"
+          id="senha"
+          placeholder="••••••••"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          required
+        />
+        <button
+          type="button"
+          class="absolute inset-y-0 right-0 pr-3 flex items-center"
+          (click)="hidePassword = !hidePassword"
+        >
+          <span class="text-gray-300">
+            @if(hidePassword){
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="w-5 h-5"
+            >
+              <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+              <path
+                fill-rule="evenodd"
+                d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            } @else{
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3.28 2.22a.75.75 0 00-1.06 1.06l14.5 14.5a.75.75 0 101.06-1.06l-1.745-1.745a10.029 10.029 0 003.3-4.38 1.651 1.651 0 000-1.185A10.004 10.004 0 009.999 3a9.956 9.956 0 00-4.744 1.194L3.28 2.22zM7.752 6.69l1.092 1.092a2.5 2.5 0 013.374 3.373l1.091 1.092a4 4 0 00-5.557-5.557z"
+                clip-rule="evenodd"
+              />
+              <path
+                d="M10.748 13.93l2.523 2.523a9.987 9.987 0 01-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 010-1.186A10.007 10.007 0 012.839 6.02L6.07 9.252a4 4 0 004.678 4.678z"
+              />
+            </svg>
+            }
+          </span>
+        </button>
+      </div>
+      @if(form.controls.senha.invalid && form.controls.senha.touched){
+      <small class="text-sm text-red-500">
+        A senha deve ter no mínimo 6 caracteres</small
+      >
+      }
+    </div>
+    <button
+      type="submit"
+      class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    >
+      {{ type === "login" ? "Entrar na sua conta" : "Criar conta" }}
+    </button>
+    @if(type === 'login'){
+    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+      Não está registrado?
+      <a href="/signin" class="text-blue-700 hover:underline dark:text-blue-500"
+        >Criar conta</a
+      >
+    </div>
+    } @else {
+    <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+      Já possui uma conta?
+      <a href="/login" class="text-blue-700 hover:underline dark:text-blue-500"
+        >Fazer Login</a
+      >
+    </div>
+    }
+  </form>
+</div>

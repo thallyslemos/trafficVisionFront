@@ -1,0 +1,135 @@
+@if(isOpen$!! | async){
+<section
+  class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black/20"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      >
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          @if(isCreation){ Cadastrar dados }@else{ Editar dados }
+        </h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-toggle="select-modal"
+          (click)="closeForm()"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-4 md:p-5">
+        <form
+          [formGroup]="dadosForm"
+          (ngSubmit)="submit()"
+          class="gap-2 flex flex-col"
+        >
+          <label
+            for="semana"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Semana
+            <input
+              formControlName="semana"
+              type="number"
+              name="semana"
+              id="semana"
+              class="input-primary"
+              required=""
+            />
+
+            @if(dadosForm.controls['semana'].invalid &&
+            dadosForm.controls['semana'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+          <label
+            for="fluxo"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Fluxo
+            <input
+              formControlName="fluxo"
+              type="number"
+              name="fluxo"
+              id="fluxo"
+              class="input-primary"
+              required=""
+            />
+            @if(dadosForm.controls['fluxo'].invalid &&
+            dadosForm.controls['fluxo'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+          <label
+            for="velocidadeMedia"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Velocidade Media
+            <input
+              formControlName="velocidadeMedia"
+              type="number"
+              name="velocidadeMedia"
+              id="velocidadeMedia"
+              class="input-primary"
+              required=""
+            />
+            @if(dadosForm.controls['velocidadeMedia'].invalid &&
+            dadosForm.controls['velocidadeMedia'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+          <label
+            for="incidentes"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Incidentes
+            <input
+              formControlName="incidentes"
+              type="number"
+              name="incidentes"
+              id="incidentes"
+              class="input-primary"
+              required=""
+            />
+            @if(dadosForm.controls['incidentes'].invalid &&
+            dadosForm.controls['incidentes'].touched){
+            <small class="text-sm text-red-500">
+              Insira um número não negativo</small
+            >
+            }</label
+          >
+
+          @if(dadosForm.get('nome')?.errors?.['required']){
+          <p class="text-error">O nome é obrigatório.</p>
+          } @if(dadosForm.get('nome')?.errors?.['minlength']){
+          <p class="text-error">O nome deve ter pelo menos 3 caracteres.</p>
+          }
+          <button type="submit" class="btn-primary w-full mt-8">Salvar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+}

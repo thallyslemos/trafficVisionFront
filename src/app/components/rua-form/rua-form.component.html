@@ -1,4 +1,4 @@
-@if(isOpen$!! | async){
+@if(isOpen$ | async){
 <section
   class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black/20"
 >
@@ -54,9 +54,11 @@
             required=""
           />
 
-          @if(ruaForm.get('nome')?.errors?.['required']){
+          @if(ruaForm.get('nome')?.errors?.['required'] &&
+          ruaForm.get('nome')?.touched){
           <p class="text-error">O nome é obrigatório.</p>
-          } @if(ruaForm.get('nome')?.errors?.['minlength']){
+          } @if(ruaForm.get('nome')?.errors?.['minlength'] &&
+          ruaForm.get('nome')?.touched){
           <p class="text-error">O nome deve ter pelo menos 3 caracteres.</p>
           }
 

@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ActionTableComponent } from '../../components/action-table/action-table.component';
 
 @Component({
-  selector: 'app-management-page',
+  selector: 'app-rua-page',
   standalone: true,
   imports: [CommonModule, ActionTableComponent],
-  templateUrl: './management-page.component.html',
-  styleUrl: './management-page.component.css'
+  templateUrl: './rua-page.component.html',
 })
-export class ManagementPageComponent {
-
+export class RuaPageComponent {
+constructor() {}
 }

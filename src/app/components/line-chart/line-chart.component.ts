@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -5,10 +6,9 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js';
-import { Rua } from '../../models/rua.model';
 import { ColorSelector } from '../../../utils/ColorSelector';
+import { Rua } from '../../models/rua.model';
 
 type DataType = 'incidentes' | 'trafego' | 'velocidade';
 
@@ -40,21 +40,21 @@ export class LineChartComponent implements OnInit, AfterViewInit {
   datasets: any[] = [];
 
   ngOnInit() {
-    this.labels = this.ruas[0].dados_de_trafego!.map(
+    this.labels = this.ruas[0].dadosTrafego!.map(
       (dado) => `Semana ${dado.semana}`
     );
 
     this.datasets = this.ruas.map((rua, index) => {
       return {
         label: rua.nome,
-        data: rua.dados_de_trafego?.map((dado) => {
+        data: rua.dadosTrafego?.map((dado) => {
           switch (this.type) {
             case 'incidentes':
               return dado.incidentes;
             case 'trafego':
-              return dado.trafego;
+              return dado.fluxo;
             case 'velocidade':
-              return dado.velocidade_media;
+              return dado.velocidadeMedia;
           }
         }),
         fill: false,

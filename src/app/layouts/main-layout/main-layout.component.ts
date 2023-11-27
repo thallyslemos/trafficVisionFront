@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, NavBarComponent, RouterOutlet],
+  imports: [CommonModule, NavBarComponent, RouterOutlet, LoadingComponent],
   templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.css'
 })
 export class MainLayoutComponent {
 
