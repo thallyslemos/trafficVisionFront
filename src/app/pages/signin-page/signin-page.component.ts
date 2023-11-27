@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UsuarioFormComponent } from '../../components/usuario-form/usuario-form.component';
-import { ToastService } from '../../services/toast.service';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
@@ -13,17 +14,20 @@ import { UsuarioService } from '../../services/usuario.service';
 export class SigninPageComponent {
   constructor(
     private usuarioService: UsuarioService,
-    private toastService: ToastService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   handleRegister(event: { email: string | null; senha: string | null }) {
     this.usuarioService
       .create({ email: event.email!, senha: event.senha! })
       .subscribe((usuario) => {
-        this.toastService.open({
-          type: 'success',
-          message: `Usuário criado com sucesso!`,
-        });
+        console.log('usuario');
+        console.log(usuario);
+        if (usuario) {
+          this.toastr.success('Usuário cadastrado com sucesso!');
+          this.router.navigate(['/login']);
+        }
       });
   }
 }

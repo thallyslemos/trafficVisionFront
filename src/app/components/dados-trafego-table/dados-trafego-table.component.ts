@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { DadosTrafego } from '../../models/rua.model';
 import { DadosTrafegoService } from '../../services/dados-trafego.service';
 import { FormDataService } from '../../services/form-data.service';
-import { ToastService } from '../../services/toast.service';
 import { DadosTrafegoFormComponent } from '../dados-trafego-form/dados-trafego-form.component';
 import { LoadingComponent } from '../loading/loading.component';
 
@@ -22,7 +22,7 @@ export class DadosTrafegoTableComponent {
   constructor(
     private formService: FormDataService,
     private dadosTrafegoService: DadosTrafegoService,
-    private toastService: ToastService
+    private toastr: ToastrService
   ) {}
 
   openForm(dados?: DadosTrafego) {
@@ -30,7 +30,6 @@ export class DadosTrafegoTableComponent {
   }
 
   handleFormSubmit(event: { dados: DadosTrafego; isCreation: boolean }) {
-    console.log(event.dados);
     this.isLoading = true;
 
     const { semana, fluxo, velocidadeMedia, incidentes } = event.dados;
@@ -48,12 +47,8 @@ export class DadosTrafegoTableComponent {
       : 'Dados atualizados com sucesso!';
 
     dadosTrafegoOperation.subscribe((data) => {
-      console.log(data);
       if (data) {
-        this.toastService.open({
-          message: successMessage,
-          type: 'success',
-        });
+        this.toastr.success(successMessage);
       }
       this.isLoading = false;
       this.formService.close();
@@ -61,17 +56,14 @@ export class DadosTrafegoTableComponent {
     });
   }
 
-  deleteDadosTrafego(id: number) {
+  handleDelete(id: number) {
     this.isLoading = true;
 
     const dadosTrafegoOperation = this.dadosTrafegoService.delete(id);
     const successMessage = 'Deletado com sucesso!';
 
     dadosTrafegoOperation.subscribe((data) => {
-      this.toastService.open({
-        message: successMessage,
-        type: 'success',
-      });
+      this.toastr.success(successMessage);
       this.isLoading = false;
       this.formService.close();
       this.loadDados();
@@ -79,7 +71,6 @@ export class DadosTrafegoTableComponent {
   }
 
   ngOnInit() {
-    console.log(this.ruaId);
     this.loadDados();
     this.columns = ['Semana', 'Tráfego', 'Velocidade', 'Incidentes'];
   }
@@ -88,10 +79,9 @@ export class DadosTrafegoTableComponent {
     this.isLoading = true;
     this.dadosTrafegoService
       .getByRuaId(this.ruaId as number)
-
       .subscribe((data) => {
-        this.isLoading = false;
         this.rows = data;
       });
+      this.isLoading = false;
   }
 }

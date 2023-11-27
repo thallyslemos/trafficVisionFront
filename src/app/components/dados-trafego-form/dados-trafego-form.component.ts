@@ -54,7 +54,6 @@ export class DadosTrafegoFormComponent {
 
   ngOnInit() {
     this.data$.subscribe((dados) => {
-      console.log(dados);
       if (dados) {
         this.dadosForm.setValue({
           semana: dados.semana,
@@ -64,7 +63,7 @@ export class DadosTrafegoFormComponent {
         });
         this.dadosId = dados.id;
       }
-      this.isCreation = !dados.id;
+      this.isCreation = !dados?.id;
     });
   }
 }

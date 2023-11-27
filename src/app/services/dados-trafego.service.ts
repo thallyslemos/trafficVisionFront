@@ -1,24 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, of } from 'rxjs';
 import { DadosTrafego } from '../models/rua.model';
-import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DadosTrafegoService {
-  constructor(private http: HttpClient, private toastService: ToastService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   private url = `http://localhost:8080/dados-trafego`;
 
   getByRuaId(id: number): Observable<DadosTrafego[]> {
     return this.http.get<DadosTrafego[]>(this.url + '/rua/' + id).pipe(
       catchError((error) => {
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao carregar dados',
-        });
+        let message = error.error.message || 'Erro ao carregar dados';
+        this.toastr.error(message);
         console.error(error);
         return of([]);
       })
@@ -26,7 +24,6 @@ export class DadosTrafegoService {
   }
 
   create(dadosTrafego: DadosTrafego): Observable<DadosTrafego | null> {
-    console.log(dadosTrafego);
     const { semana, fluxo, incidentes, velocidadeMedia, rua } = dadosTrafego;
     return this.http
       .post<DadosTrafego>(this.url, {
@@ -38,10 +35,8 @@ export class DadosTrafegoService {
       })
       .pipe(
         catchError((error) => {
-          this.toastService.open({
-            type: 'error',
-            message: 'Erro ao criar dados',
-          });
+          let message = error.error.message || 'Erro ao criar dados';
+          this.toastr.error(message);
           console.error(error);
           return of(null);
         })
@@ -53,10 +48,8 @@ export class DadosTrafegoService {
       .put<DadosTrafego>(this.url + '/' + dadosTrafego.id, { ...dadosTrafego })
       .pipe(
         catchError((error) => {
-          this.toastService.open({
-            type: 'error',
-            message: 'Erro ao atualizar dados',
-          });
+          let message = error.error.message || 'Erro ao atualizar dados';
+          this.toastr.error(message);
           console.error(error);
           return of(null);
         })
@@ -67,10 +60,8 @@ export class DadosTrafegoService {
     return this.http.delete<DadosTrafego>(this.url + '/' + id).pipe(
       catchError((error) => {
         console.error(error);
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao deletar dados',
-        });
+        let message = error.error.message || 'Erro ao deletar dados';
+        this.toastr.error(message);
         return of(null);
       })
     );

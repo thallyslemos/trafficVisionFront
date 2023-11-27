@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { Auth } from '../models/auth.model';
 import { Usuario } from '../models/usuario.model';
-import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ import { ToastService } from './toast.service';
 export class AuthService {
   constructor(
     private http: HttpClient,
-    private toastService: ToastService,
+    private toastr: ToastrService,
     private router: Router
   ) {}
 
@@ -24,18 +24,12 @@ export class AuthService {
         if (auth !== null) {
           localStorage.setItem('token', auth.token);
           this.router.navigate(['/auth']);
-          this.toastService.open({
-            type: 'success',
-            message: 'Autenticado com sucesso',
-          });
+          this.toastr.success('Autenticado com sucesso');
         }
       }),
       catchError((error) => {
-        console.error(error);
-        this.toastService.open({
-          type: 'error',
-          message: 'Erro ao autenticar',
-        });
+        let message = error.error.message || 'Erro ao autenticar';
+        this.toastr.error(message);
         return of(null);
       })
     );
@@ -52,7 +46,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    // Remove o token do localStorage
+    // Remove o token do localStorage e mandar o usuário para a tela de login
     localStorage.removeItem('token');
     this.router.navigate(['/']);
   }

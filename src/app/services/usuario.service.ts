@@ -1,27 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Observable, catchError, map, of } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
-import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  constructor(private http: HttpClient, private toastService: ToastService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   private url = 'http://localhost:8080/usuarios';
 
-  public create(usuario: Usuario): Observable<Usuario | null> {
-    return this.http.post<Usuario>(this.url, usuario).pipe(
-      catchError((error) => {
-        console.error(error);
-        // this.toastService.open({
-        //   type: 'error',
-        //   message: 'Erro ao criar usuário',
-        // });
-        return of(null);
-      })
-    );
+  public create(usuario: Usuario): Observable<boolean> {
+    return this.http
+      .post<Usuario>(this.url, usuario, { observe: 'response' })
+      .pipe(
+        map((response) => {
+          return response.status === 201;
+        }),
+        catchError((error) => {
+          console.error(error);
+          let message = error.error.message || 'Erro ao cadastrar usuário';
+          this.toastr.error(message);
+          return of(false);
+        })
+      );
   }
 }
